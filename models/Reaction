@@ -1,0 +1,38 @@
+const { ObjectID } = require("bson");
+const { Schema, model, Types } = require("mongoose");
+const { schema } = require("./user");
+
+// Reaction Schema (schema only)
+const reactionSchema = new Schema(
+  {
+    recationId: {
+      type: Schema.Types.ObjectId,
+      default: () => {
+        return new Types.ObjectID();
+      },
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      max_lenght: 280,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: timesStamps.currentTime,
+      get: (timeStamp) => {
+        return dayjs(timeStamp).format("{YYYY} MM-DDTHH:mm:ss SSS [Z] A");
+      },
+    },
+  },
+  {
+    toJSON: {
+      getters: true,
+    },
+  }
+);
+
+module.exports = reactionSchema;
