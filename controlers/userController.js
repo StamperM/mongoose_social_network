@@ -1,4 +1,4 @@
-const {Thought, User}= require('../../models/');
+const {Thought, User}= require('../models');
 
 
 module.exports ={
@@ -25,7 +25,7 @@ getOneUser(req,res){
 
 
 // POST a new user
-createSecureServer(req,res){
+createUser(req,res){
     User.create(req.body)
     .then((user)=> res.json(user))
     .catch ((err)=> {

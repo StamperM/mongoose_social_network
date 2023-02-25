@@ -1,8 +1,8 @@
 const { timeStamp } = require("console");
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaType } = require("mongoose");
 const dayjs =require('dayjs')
-const reactionSchema =require('./Reaction');
 
+const reactionSchema = require('./Reaction')
 // making a schema
 const thoughtSchema = new Schema(
   {
@@ -14,14 +14,16 @@ const thoughtSchema = new Schema(
       max_lenght: 280,
     },
     createdAt: {
-      type: Date,
-      default: timesStamps.currentTime,
-      get: (timeStamp) => {
-
-        return dayjs(timeStamp).format('{YYYY} MM-DDTHH:mm:ss SSS [Z] A') 
+        type: Date,
+        default: Date.now,
+        get: (timeStamp) => {
+          return dayjs(timeStamp).format("{YYYY} MM-DDTHH:mm:ss SSS [Z] A");
+        },
       },
+    username: {
+        type:Schema.Types.ObjectId,
+        ref:'User',
     },
-    username: userSchema,
     reaction:[reactionSchema],
   },
   {
