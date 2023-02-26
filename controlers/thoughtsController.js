@@ -11,7 +11,7 @@ module.exports = {
 
   // GET to get a single thought by its _id
   getUserThought(req, res) {
-    Thoughts.findbyId({ _id: req.parms.id })
+    Thoughts.findByOne({ _id: req.parms.id })
       .then((thought) =>
         !thought
           ? res.json(404).json({ message: "not a valid thought" })
@@ -28,7 +28,7 @@ module.exports = {
   },
 
   // PUT to update a thought by its _id
-  updateThoughtByID(req, res) {
+  updateThoughtByOne(req, res) {
     Thoughts.findOneAndUpdate({ _id: req.params.id }, { thought: req.body })
       .then((updatedThought) =>
         !updatedThought
