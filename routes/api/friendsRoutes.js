@@ -1,10 +1,16 @@
-const { model } = require('mongoose');
-
 const router = require('express').Router();
+const {getThoughts,
+getUserThought,
+createtNewThought,
+updateThoughtByID,
+deleteThought,
+createReaction,
+}= require('../../controlers/thoughtsController');
 
-// POST to add a new friend to a user's friend list
 
-// DELETE to remove a friend from a user's friend list
-
+router.route('/')
+.get(getThoughts)
+.post(createtNewThought, createReaction)
+.update(updateThoughtByID).delete(deleteThought)
 
 module.exports = router;

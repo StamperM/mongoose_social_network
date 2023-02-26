@@ -5,9 +5,12 @@ createUser,
 deleteUser} = require('../../controlers/userController');
 
 // user api
-router.route('/').get(getUsers);
+router.route('/').get(getUsers)
+.post(createUser);
 
 //user by id
-router.route('/:userId').get(getOneUser).post(createUser).delete(deleteUser);
+router.route('/:userId')
+.get(getOneUser)
+.delete(deleteUser);
 
 module.exports =router;
