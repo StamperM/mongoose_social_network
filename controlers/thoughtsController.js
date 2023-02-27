@@ -1,13 +1,16 @@
-const { ObjectID } = require("mongoose").Types;
-const  Thoughts = require("../models");
+const  {Thought} = require("../models");
 
 module.exports = {
   // GET to get all thoughts
   getThoughts(req, res) {
-    Thoughts.find()
+    console.log("here", JSON.stringify({ Thought }, null, 2))
+
+
+
+    Thought.find({})
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
-  },
+   },
 
   // GET to get a single thought by its _id
   getUserThought(req, res) {
@@ -22,14 +25,16 @@ module.exports = {
 
   // POST to create a new thought (don't forget to push the created thought's _id to the associated user's thoughts array field)
   createtNewThought(req, res) {
-    Thoughts.create(req.body)
-      .then((thought) => res.json(thought))
+    Thought.create({thoughtText:req.body.thoughtText}, {new:true})
+      .then((thought) => 
+    
+      res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
 
   // PUT to update a thought by its _id
   updateThoughtByOne(req, res) {
-    Thoughts.findOneAndUpdate({ _id: req.params.id }, { thought: req.body })
+    Thought.findOneAndUpdate({ _id: req.params.id }, { thought: req.body })
       .then((updatedThought) =>
         !updatedThought
           ? res.status(400).json({ message: "There is not thought to update." })
@@ -41,7 +46,7 @@ module.exports = {
   // DELETE to remove a thought by its _id
 
   deleteThought(req, res) {
-    Thoughts.findOneAndDelete({ _id: req.params.id }).then((thought) =>
+    Thought.findOneAndDelete({ _id: req.params.id }).then((thought) =>
       !thought
         ? res.status(404).json({ message: "No thought to delete." })
         : User.findOneAndUpdate(
@@ -61,7 +66,7 @@ module.exports = {
 
 // POST to create a reaction stored in a single thought's reactions array field
 createReaction(req,res){
-    Thoughts.findOneAndUpdate(
+    Thought.findOneAndUpdate(
         {_id: req.params.thoughtId},
         {$addToSet:{reaction:req.body}},
         {runValidators:true, new:true}

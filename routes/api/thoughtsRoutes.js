@@ -7,10 +7,9 @@ const {getThoughts,
     // createReaction,
     }= require('../../controlers/thoughtsController');
     
-    
-    router.route('/')
-    .get(getThoughts)
-    .post(createtNewThought);
+    // api/thoughts
+    router.get('/',getThoughts);
+    // .post(createtNewThought);
    
     // router.route('/:thoughtid')
     // .get(getUserThought)

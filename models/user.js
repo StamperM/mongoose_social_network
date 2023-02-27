@@ -1,6 +1,6 @@
 const { Schema, model,Types} = require("mongoose");
 const validator = require("validator");
-const thoughts = require('./Thoughts')
+const thought = require('./Thoughts')
 
 // create user model
 const userSchema = new Schema({
@@ -26,6 +26,6 @@ const userSchema = new Schema({
   ],
 });
 
-const Basketball= model("basketball", userSchema);
+const User= model("User", userSchema);
 
-module.exports = Basketball;
+module.exports = User;

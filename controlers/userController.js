@@ -1,4 +1,4 @@
-const User= require('../models');
+const {User}= require('../models');
 
 
 module.exports ={
@@ -13,13 +13,21 @@ getUsers(req,res){
 // GET a single user by its _id and populated thought and friend data
 
 getOneUser(req,res){
+    console.log("here")
     User.findByOne({ _id:req.params.userId})
-    .then((user)=>
+    .select('-__v')
+    .then(async(user)=>
     !user
-    ? res.status(404).json({message:'No user with that ID'})
-    : res.json(user)
+    ?res.status(404).json({message:"No user matches that ID"})
+    :res.json({userName,
+        thoughts,
+        friends,
+    })
     )
-    .catch((err)=> res.status(500).json(err))
+    .catch((err)=> {
+        console.log(err);
+        return res.status(500).json(err);
+    });
 
 },
 
