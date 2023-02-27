@@ -10,7 +10,7 @@ const {getThoughts,
     
     router.route('/')
     .get(getThoughts)
-    .post(createtNewThought)
+    .post(createtNewThought);
    
     // router.route('/:thoughtid')
     // .get(getUserThought)

@@ -1,4 +1,4 @@
-const {Thought, User}= require('../models');
+const User= require('../models');
 
 
 module.exports ={
@@ -44,6 +44,7 @@ deleteUser(req,res){
     ? res.status(404).json({message:'There is not matching Id'})
     : res.json(user))
     .catch((err)=> res.status(500).json(err))
+    
 }
 //Remove a user's associated thoughts when deleted.
 };
