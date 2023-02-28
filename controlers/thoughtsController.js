@@ -1,4 +1,4 @@
-const  {Thought} = require("../models");
+const  {Thought, User} = require("../models");
 
 module.exports = {
   // GET to get all thoughts
@@ -13,9 +13,10 @@ module.exports = {
    },
 
   // GET to get a single thought by its _id
-  getUserThought(req, res) {
-    Thoughts.findByOne({ _id: req.parms.id })
-      .then((thought) =>
+  singleThought(req, res) {
+    Thought.findByOne({ _id: req.parms.thoughtId })
+    .select('-__v')
+    .then((thought) =>
         !thought
           ? res.json(404).json({ message: "not a valid thought" })
           : res.json(thought)
@@ -25,16 +26,17 @@ module.exports = {
 
   // POST to create a new thought (don't forget to push the created thought's _id to the associated user's thoughts array field)
   createtNewThought(req, res) {
-    Thought.create({thoughtText:req.body.thoughtText}, {new:true})
+   Thought.create(req.body)
       .then((thought) => 
-    
+  
       res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
 
   // PUT to update a thought by its _id
   updateThoughtByOne(req, res) {
-    Thought.findOneAndUpdate({ _id: req.params.id }, { thought: req.body })
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId }, { thought: req.body })
       .then((updatedThought) =>
         !updatedThought
           ? res.status(400).json({ message: "There is not thought to update." })
@@ -64,12 +66,14 @@ module.exports = {
 
 // /api/thoughts/:thoughtId/reactions
 
+
+
 // POST to create a reaction stored in a single thought's reactions array field
 createReaction(req,res){
     Thought.findOneAndUpdate(
         {_id: req.params.thoughtId},
         {$addToSet:{reaction:req.body}},
-        {runValidators:true, new:true}
+        { new:true}
     )
     .then((reaction)=>
     !reaction
@@ -80,4 +84,17 @@ createReaction(req,res){
 },
 
 // DELETE to pull and remove a reaction by the reaction's reactionId value
+deleteReaction(req,res){
+  Thought.findOneAndUpdate(
+    { _id: req.parms.thoughtId},
+     {$pull:{reaction:{reactionId:req.params.reactionId}}},
+     {runValidators:true,new:true}
+  )
+  .then((thought)=>
+  !thought
+  ?res.status(404).json({message:"no thought with that ID"})
+  :res.json(thought))
+  .catch((err)=> res.status(500).json(err));
+},
+
 };
