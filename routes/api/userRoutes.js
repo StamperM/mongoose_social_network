@@ -17,4 +17,6 @@ router.route('/:userId')
 
 
 router.route('/:userId/friends/:friendId').post(addFriend);
+
+
 module.exports =router;
