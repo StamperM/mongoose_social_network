@@ -19,6 +19,8 @@
 
   ## Desciption
  This project was gave me the opprunitiy to use mongoose to create the backend of a social network using the CRUD operators to create, read, update and delete the data in the mongo database.
+[Walkthough Video](https://user-images.githubusercontent.com/90412072/222876867-5dd886d1-6f06-4d2e-b295-01c9f787c3b6.webm)
+
 
  
   ## Installation 
@@ -28,7 +30,6 @@ Mongoose, and express.js also used day.js
 
 
   ## Questions 
- 
  
   [GitHub](stamperM)
 
